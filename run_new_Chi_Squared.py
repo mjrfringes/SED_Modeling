@@ -51,9 +51,9 @@ sources = sourcetable.group_by('SOFIA_name')
 # set up extinction
 extinctions = range(30)
 d = SphericalDust()
-d.read('d03_5.5_3.0_A.hdf5')
+d.read('OH5.hdf5')
 chi = d.optical_properties.chi#/100. # divide by 100 for the gas-to-dust ratio
-chi = chi[::-1]
+chi = chi[::-1]# divide by 100 for the gas-to-dust ratio
 wav = d.optical_properties.wav
 wav = wav[::-1]
 Chi = interp1d(wav,chi,kind='linear')

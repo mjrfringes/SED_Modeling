@@ -54,13 +54,21 @@ fluxnames = [p.bands for p in fluxlist]
 
 
 # set up extinction
+#d = SphericalDust()
+#d.read('d03_5.5_3.0_A.hdf5')
+#chi = d.optical_properties.chi
+#chi = chi[::-1]
+#wav = d.optical_properties.wav
+#wav = wav[::-1]
+#Chi = interp1d(wav,chi,kind='linear')
 d = SphericalDust()
-d.read('d03_5.5_3.0_A.hdf5')
-chi = d.optical_properties.chi
-chi = chi[::-1]
+d.read('OH5.hdf5')
+chi = d.optical_properties.chi#/100. # divide by 100 for the gas-to-dust ratio
+chi = chi[::-1]# divide by 100 for the gas-to-dust ratio
 wav = d.optical_properties.wav
 wav = wav[::-1]
 Chi = interp1d(wav,chi,kind='linear')
+
 
 # now load up the grid
 name = ['model']
@@ -125,7 +133,7 @@ for target in targetlist:
 		#plt.show()
 
 		# calculate optical depth
-		tau_ext1 = Chi(sed.wav)/Chi(0.550)/1.086/100.
+		tau_ext1 = Chi(sed.wav)/Chi(0.550)/1.086
 		#print "sed.wav = ",sed.wav
 		#print "tau_ext1 = ",tau_ext1
 		tau = tau_ext1*extinction
